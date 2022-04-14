@@ -21,13 +21,29 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.google.turbine</groupId>
+  <groupId>com.vertispan.turbine</groupId>
   <artifactId>turbine</artifactId>
   <version>HEAD-SNAPSHOT</version>
 
   <name>turbine</name>
-  <description>turbine is a header compiler for Java</description>
-  <url>https://github.com/google/turbine</url>
+  <description>
+    Turbine is a header compiler for Java.
+    This distribution is produced by Vertispan LLC for Maven Central, as Google's
+    original repository has never made a tag or release. The links and references
+    in this pom.xml will reference the Vertispan fork, to ensure that any error
+    introduced by our changes are not incorrectly blamed on the upstream Google
+    repository.
+  </description>
+  <url>https://github.com/vertispan/turbine</url>
+  <inceptionYear>2016</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <properties>
     <asm.version>9.2</asm.version>
@@ -49,7 +65,33 @@
     <developer>
       <name>Liam Miller-Cushon</name>
     </developer>
+    <developer>
+      <name>Colin Alworth</name>
+      <email>colin@vertispan.com</email>
+      <roles>
+        <role>distribution</role>
+      </roles>
+      <organization>Vertispan LLC</organization>
+      <organizationUrl>https://www.vertispan.com/</organizationUrl>
+    </developer>
   </developers>
+
+  <scm>
+    <connection>
+      scm:git:https://github.com/vertispan/turbine.git
+    </connection>
+    <developerConnection>
+      scm:git:git@github.com:vertispan/turbine.git
+    </developerConnection>
+    <url>
+      https://github.com/vertispan/turbine
+    </url>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>http://github.com/vertispan/turbine/issues</url>
+  </issueManagement>
 
   <dependencies>
     <dependency>

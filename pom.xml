@@ -23,7 +23,7 @@
 
   <groupId>com.vertispan.turbine</groupId>
   <artifactId>turbine</artifactId>
-  <version>HEAD-SNAPSHOT</version>
+  <version>v20220503-SNAPSHOT</version>
 
   <name>turbine</name>
   <description>
@@ -316,9 +316,9 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <id>vertispan-snapshots</id>
+      <name>Vertispan's j2cl snapsho repo</name>
+      <url>https://repo.vertispan.com/j2cl/</url>
     </snapshotRepository>
     <repository>
       <id>sonatype-nexus-staging</id>

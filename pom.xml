@@ -23,7 +23,7 @@
 
   <groupId>com.vertispan.turbine</groupId>
   <artifactId>turbine</artifactId>
-  <version>v20220503-SNAPSHOT</version>
+  <version>0.2</version>
 
   <name>turbine</name>
   <description>

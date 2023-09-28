@@ -21,9 +21,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertThrows;
 
-import com.google.common.base.Function;
 import com.google.common.base.Supplier;
-import com.google.common.io.ByteStreams;
 import com.google.common.io.CharStreams;
 import com.google.turbine.diag.SourceFile;
 import java.io.FileNotFoundException;
@@ -35,6 +33,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import javax.annotation.processing.FilerException;
 import javax.lang.model.element.Element;
 import javax.tools.FileObject;
@@ -127,8 +126,7 @@ public class TurbineFilerTest {
     Collection<SourceFile> unused = filer.finishRound();
 
     FileObject output = filer.getResource(StandardLocation.SOURCE_OUTPUT, "com.foo", "Bar.java");
-    assertThat(new String(ByteStreams.toByteArray(output.openInputStream()), UTF_8))
-        .isEqualTo("hello");
+    assertThat(new String(output.openInputStream().readAllBytes(), UTF_8)).isEqualTo("hello");
     assertThat(output.getCharContent(false).toString()).isEqualTo("hello");
     assertThat(CharStreams.toString(output.openReader(true))).isEqualTo("hello");
   }
@@ -142,8 +140,7 @@ public class TurbineFilerTest {
     Collection<SourceFile> unused = filer.finishRound();
 
     FileObject output = filer.getResource(StandardLocation.CLASS_OUTPUT, "com.foo", "Baz.class");
-    assertThat(new String(ByteStreams.toByteArray(output.openInputStream()), UTF_8))
-        .isEqualTo("goodbye");
+    assertThat(new String(output.openInputStream().readAllBytes(), UTF_8)).isEqualTo("goodbye");
     assertThat(output.getCharContent(false).toString()).isEqualTo("goodbye");
     assertThat(CharStreams.toString(output.openReader(true))).isEqualTo("goodbye");
   }
@@ -153,7 +150,7 @@ public class TurbineFilerTest {
     FileObject resource =
         filer.getResource(StandardLocation.ANNOTATION_PROCESSOR_PATH, "META-INF", "MANIFEST.MF");
 
-    assertThat(new String(ByteStreams.toByteArray(resource.openInputStream()), UTF_8))
+    assertThat(new String(resource.openInputStream().readAllBytes(), UTF_8))
         .contains("Manifest-Version:");
     assertThat(CharStreams.toString(resource.openReader(true))).contains("Manifest-Version:");
     assertThat(resource.getCharContent(false).toString()).contains("Manifest-Version:");

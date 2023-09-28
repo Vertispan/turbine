@@ -28,7 +28,6 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.io.ByteStreams;
 import com.google.common.io.MoreFiles;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.turbine.diag.TurbineError;
@@ -107,7 +106,7 @@ public class MainTest {
 
   @Test
   public void packageInfo() throws IOException {
-    Path src = temporaryFolder.newFile("package-info.jar").toPath();
+    Path src = temporaryFolder.newFile("package-info.java").toPath();
     MoreFiles.asCharSink(src, UTF_8).write("@Deprecated package test;");
 
     Path output = temporaryFolder.newFile("output.jar").toPath();
@@ -148,7 +147,7 @@ public class MainTest {
       Enumeration<JarEntry> entries = jf.entries();
       while (entries.hasMoreElements()) {
         JarEntry je = entries.nextElement();
-        data.put(je.getName(), ByteStreams.toByteArray(jf.getInputStream(je)));
+        data.put(je.getName(), jf.getInputStream(je).readAllBytes());
       }
     }
     return data;
@@ -468,7 +467,7 @@ public class MainTest {
 
   @Test
   public void classGeneration() throws IOException {
-    Path src = temporaryFolder.newFile("package-info.jar").toPath();
+    Path src = temporaryFolder.newFile("package-info.java").toPath();
     MoreFiles.asCharSink(src, UTF_8).write("@Deprecated package test;");
     File resources = temporaryFolder.newFile("resources.jar");
     Main.compile(

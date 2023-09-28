@@ -23,7 +23,7 @@
 
   <groupId>com.vertispan.turbine</groupId>
   <artifactId>turbine</artifactId>
-  <version>v20220503-SNAPSHOT</version>
+  <version>0.2</version>
 
   <name>turbine</name>
   <description>
@@ -46,14 +46,15 @@
   </licenses>
 
   <properties>
-    <asm.version>9.2</asm.version>
-    <guava.version>31.0.1-jre</guava.version>
-    <errorprone.version>2.11.0</errorprone.version>
+    <asm.version>9.5</asm.version>
+    <guava.version>32.1.1-jre</guava.version>
+    <errorprone.version>2.16</errorprone.version>
     <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <protobuf.version>3.19.2</protobuf.version>
+    <protobuf.version>3.19.6</protobuf.version>
     <grpc.version>1.43.2</grpc.version>
+    <native.maven.plugin.version>0.9.23</native.maven.plugin.version>
   </properties>
 
   <organization>
@@ -371,6 +372,45 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${native.maven.plugin.version}</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+              <execution>
+                <id>test-native</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <phase>test</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <imageName>turbine</imageName>
+              <mainClass>com.google.turbine.main.Main</mainClass>
+              <classpath>
+                <param>${project.build.directory}/${project.artifactId}-${project.version}-all-deps.jar</param>
+              </classpath>
+              <buildArgs>
+                <buildArg>--no-fallback</buildArg>
+              </buildArgs>
+            </configuration>
           </plugin>
         </plugins>
       </build>

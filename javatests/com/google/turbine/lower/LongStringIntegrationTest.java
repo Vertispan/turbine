@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.objectweb.asm.Opcodes;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -33,7 +34,6 @@ import org.junit.runners.JUnit4;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Opcodes;
 
 @RunWith(JUnit4.class)
 public class LongStringIntegrationTest {
@@ -44,7 +44,7 @@ public class LongStringIntegrationTest {
   public void test() throws Exception {
     Map<String, byte[]> output =
         runTurbineWithStack(
-            /* stackSize= */ 1,
+            /* stackSize= */ 100_000,
             /* input= */ ImmutableMap.of("Test.java", source()),
             /* classpath= */ ImmutableList.of());
 
@@ -70,7 +70,7 @@ public class LongStringIntegrationTest {
             },
             /* name= */ "turbine",
             stackSize);
-    t.run();
+    t.start();
     t.join();
     return output;
   }
